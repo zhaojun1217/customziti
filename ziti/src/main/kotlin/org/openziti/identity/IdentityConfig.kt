@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2020 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.identity
 
+import com.google.gson.Gson
+import java.io.File
+import java.io.Reader
+
+internal class IdentityConfig(val ztAPI: String, val id: Id) {
+    internal class Id(val key: String, val cert: String, val ca: String?)
+
+    companion object {
+        fun load(r: Reader): IdentityConfig = Gson().fromJson(r, IdentityConfig::class.java)
+
+        fun load(f: File): IdentityConfig = load(f.reader());
+
+        fun load(path: String): IdentityConfig = load(File(path))
+    }
+}

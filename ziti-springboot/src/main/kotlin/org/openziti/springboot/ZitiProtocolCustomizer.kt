@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.springboot
 
+import org.openziti.Ziti
+import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer
+import org.springframework.stereotype.Component
+
+/**
+ * class to inject Ziti service configuration([ZitiProperties]) into [ZitiProtocol]
+ */
+@Component
+class ZitiProtocolCustomizer(val config: ZitiProperties): TomcatProtocolHandlerCustomizer<ZitiProtocol> {
+
+    override fun customize(protocolHandler: ZitiProtocol) {
+        protocolHandler.ztx = Ziti.newContext(config.id, charArrayOf())
+        protocolHandler.service = config.serviceName
+    }
+}

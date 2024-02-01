@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2022 NetFoundry Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.openziti.sample.springboot.client;
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+import org.openziti.springboot.client.web.config.EnableZitiHttpClient;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@SpringBootApplication
+@EnableZitiHttpClient
+@EnableScheduling
+public class SampleApplication {
+
+  public static void main(String[] args) {
+		SpringApplication.run(SampleApplication.class, args);
+	}
+
+}

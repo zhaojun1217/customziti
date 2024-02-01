@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.springboot
 
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.stereotype.Component
+
+/**
+ * Simple Ziti service configuration consisting of Ziti identity and service name.
+ */
+@Component
+@ConfigurationProperties(prefix = "ziti")
+class ZitiProperties {
+    var id: String = ""
+    var serviceName: String = ""
+}

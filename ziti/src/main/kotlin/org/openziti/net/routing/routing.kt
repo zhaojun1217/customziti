@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.net.routing
 
+import org.openziti.api.CIDRBlock
+import java.util.*
+
+interface RouteManager {
+    fun addRoute(cidr: CIDRBlock)
+    fun removeRoute(cidr: CIDRBlock)
+}
+
+private object NoopRouteManager: RouteManager {
+    override fun addRoute(cidr: CIDRBlock) {}
+    override fun removeRoute(cidr: CIDRBlock) {}
+}
+
+private object Loader {
+    val routeManager: RouteManager
+    init {
+        val loader = ServiceLoader.load(RouteManager::class.java)
+        routeManager = loader.firstOrNull() ?: NoopRouteManager
+    }
+}
+
+fun RouteManager(): RouteManager = Loader.routeManager

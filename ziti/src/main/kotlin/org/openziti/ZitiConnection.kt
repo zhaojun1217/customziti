@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti
 
+import kotlinx.coroutines.runBlocking
+import java.io.Closeable
+
+/**
+ * Object representing established Ziti connection.
+ */
+interface ZitiConnection: Closeable {
+    var timeout: Long
+
+    suspend fun send(data: ByteArray)
+    suspend fun receive(out: ByteArray, off: Int, len: Int): Int
+
+    fun write(data: ByteArray) = runBlocking { send(data) }
+    fun read(out: ByteArray, off: Int, len: Int): Int = runBlocking { receive(out, off, len) }
+
+    fun isClosed(): Boolean
+}

@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.net.dns
 
+import java.io.Writer
+import java.net.InetAddress
+
+interface DNSResolver {
+    fun resolve(hostname: String): InetAddress?
+    fun lookup(addr: InetAddress): String?
+
+    fun dump(writer: Writer)
+}

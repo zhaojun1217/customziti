@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2020 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.util
 
+data class NetworkStats(val upRate: Double, val downRate: Double)

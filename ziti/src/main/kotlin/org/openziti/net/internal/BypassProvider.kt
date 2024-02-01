@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.net.internal
 
+import javax.net.SocketFactory
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+
+interface BypassProvider {
+    fun getSocketFactory(): SocketFactory
+    fun getSSLSocketFactory(ssl: SSLContext): SSLSocketFactory
+}

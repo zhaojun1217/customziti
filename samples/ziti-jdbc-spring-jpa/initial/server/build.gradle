@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2022 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,23 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+plugins {
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'java'
+}
 
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.openziti:ziti-springboot:${versions.ziti}"
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+}
+
+bootRun {
+	systemProperty 'ziti.id', findProperty('ziti.id') ?: '../../network/private-service.json'
+}
+
+test {
+	useJUnitPlatform()
+}

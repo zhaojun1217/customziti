@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.util
+
+import java.io.Writer
+
+interface DebugInfoProvider {
+    fun names(): Iterable<String>
+    fun dump(name: String, output: Writer)
+}
 

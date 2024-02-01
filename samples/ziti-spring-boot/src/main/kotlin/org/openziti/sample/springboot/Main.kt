@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.sample.springboot
 
+import org.springframework.boot.runApplication
+
+object Main {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        runApplication<ZitiSpringBootApplication>(*args)
+    }
+}

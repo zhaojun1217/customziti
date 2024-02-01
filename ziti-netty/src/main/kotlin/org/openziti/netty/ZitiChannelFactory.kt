@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2020 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.netty
 
+import io.netty.channel.Channel
+import io.netty.channel.ChannelFactory
+import org.openziti.ZitiContext
+
+class ZitiChannelFactory(internal val ztx: ZitiContext): ChannelFactory<Channel> {
+    override fun newChannel(): Channel = ZitiChannel(null, ztx.open())
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2022 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+plugins {
+	id 'java'
+}
 
+ext {
+   javaMainClass = "com.example.restservice.SimpleClient"
+}
+
+dependencies {
+	implementation "org.openziti:ziti:${versions.ziti}"
+	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+	implementation 'org.slf4j:slf4j-api:2.0.5'
+	implementation 'org.slf4j:slf4j-simple:2.0.5'
+}
+
+task runWithJavaExec(type: JavaExec) {
+    group = "Execution"
+    description = "Run the OpenZiti demo client"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = javaMainClass
+}

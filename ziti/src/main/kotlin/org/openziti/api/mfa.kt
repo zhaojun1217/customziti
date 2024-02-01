@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 NetFoundry Inc.
+ * Copyright (c) 2018-2021 NetFoundry, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,33 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+package org.openziti.api
 
+enum class MFAType {
+    MFA,
+    CUSTOM
+}
+
+data class AuthQueryMFA (
+    val typeId: MFAType?,
+    val provider: String,
+    val httpMethod: String,
+    val httpUrl: String,
+    val minLength: Int,
+    val maxLength: Int,
+    val format: String
+)
+
+data class MFAEnrollment (
+    val isVerified: Boolean,
+    val recoveryCodes: Array<String>,
+    val provisioningUrl: String
+)
+
+data class MFACode (
+    val code: String
+)
+
+data class MFARecoveryCodes (
+    val recoveryCodes: Array<String>
+)

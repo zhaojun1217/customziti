@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = 'customziti'
-include 'ziti'
-include 'ziti-netty'
-include 'ziti-springboot'
-include 'ziti-springboot-client'
-include 'ziti-jdbc'
-include 'ziti-vertx'
+rootProject.name = 'ziti-jvm-samples'
 
+include 'ziti-enroller'
+include 'ziti-half-close'
+include 'sample'
+include 'http-sample'
+include 'sample-host'
+include 'ziti-netty-samples'
+include 'terminators-sample'
+include 'sample-okhttp'
+include 'ziti-spring-boot'
+include 'ziti-spring-boot-client'
+include 'ziti-jdbc-postgresql'
+include 'ziti-jdbc-spring-jpa:initial:server'
+include 'ziti-jdbc-spring-jpa:initial:client'
+include ':ziti-jdbc-spring-jpa:complete:server'
+include 'ziti-jdbc-spring-jpa:complete:client'
