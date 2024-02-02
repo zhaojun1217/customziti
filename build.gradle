@@ -45,7 +45,7 @@ ext {
 //    gitBranch = semver.info.branch.name
 }
 
-group = "org.openziti"
+group = "com.github.zhaojun1217"
 version = "${semver.info}"
 
 subprojects {
