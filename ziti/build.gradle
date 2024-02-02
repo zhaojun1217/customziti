@@ -56,56 +56,29 @@ dependencies {
     testImplementation(libs.slf4j.simple)
 }
 
-def generatedResourcesDir = "${buildDir}/generated-resources/main"
-
-//tasks.register("versionProps", WriteProperties) {
-//    destinationFile = file("${generatedResourcesDir}/org/openziti/util/ziti-version.properties")
-//
-//    property("version", "${project.version}")
-//    property("revision", gitCommit)
-//    property("branch", gitBranch)
-//}
-
-sourceSets.main {
-//    resources.srcDir(files(generatedResourcesDir).builtBy(versionProps))
+tasks.register('generateSourcesJar', Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
 }
 
 
-tasks.register("fullJar", Jar) {
-    manifest.from jar.manifest
-    archiveClassifier = 'full'
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } } {
-        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/**/module-info.class'
-    }
-    with jar
-}
-
-tasks.register('sourcesJar', Jar) {
-    from sourceSets.main.java.srcDirs
-    from sourceSets.main.kotlin.srcDirs
-    archiveClassifier = "sources"
-}
-
-tasks.register('dokkaJar', Jar) {
-    archiveClassifier = "javadoc"
-    from dokkaJavadoc.outputDirectory
-}
-
-artifacts {
-    archives(sourcesJar)
-    archives(dokkaJar)
-    archives(fullJar)
-}
-
-publishing {
-    publications {
-        zitiJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact dokkaJar
-            artifact fullJar
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            group = 'com.github.zhaojun1217'
+            version = '1.0.2'
+            //发布release版本
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.java
+                //groupId通常是自己的gitee或者GitHub的账户地址
+                groupId = group
+                //artifactId通常是指待发布项目的名称，也就是别名
+                artifactId = 'customziti'
+                //version通常是指待发布项目的版本号，这里是写死的，通常我们取项目versionName
+                version = version
+            }
         }
     }
 }
-
-apply from: rootProject.file('publish.gradle')
